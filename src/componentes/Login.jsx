@@ -1,11 +1,19 @@
 import React, { useState } from 'react'
 import { useForms } from './ayuda/useForms'
-import {login} from './funciones/Funciones'
+import {login,permisos} from './funciones/Funciones'
 import { useNavigate } from 'react-router-dom'
+import useAuth from '../hooks/useAuth'
+import { Box, Grid } from '@mui/material';
+import '../assets/Login.css'
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
 export default function Login() {
 
     const {form, actualizado} = useForms() 
+    const {setAuth} = useAuth();
 
     const navegar = useNavigate()
     const validarDatos = async (e) => {
@@ -13,13 +21,17 @@ export default function Login() {
         let parametros = form
         const respuesta = await login('usuario/login', parametros)
         const dato = await respuesta.json()
-        console.log(dato) 
-       
-
+        
         if(dato.status == 'succes' && dato.validar == 1){
-
+            // setear datos en el auth
+            const idusuarios = dato.usuario.idusuarios
+            const respuestaPermisos = await permisos('/usuario/obtenerPermiso/'+idusuarios)
+            const datoPermiso = await respuestaPermisos.json()
+            // Persistir los datos en el navegador 
+            localStorage.setItem("usuario", JSON.stringify(datoPermiso.usuario));
+            setAuth(datoPermiso.usuario)
             navegar('/panel')
-            console.log('entrando')
+            
         }
         else{
 
@@ -31,8 +43,11 @@ export default function Login() {
 
     return (
         <>
-
-
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 3 }}>
+                <Grid container justifyContent="center" alignItems="center">
+                    <h1>MyAcademy</h1>
+                </Grid>
+            </Box>
             <form className="form" onSubmit={validarDatos}>
                 <span className="input-span">
                     <label htmlFor="email" className="label">Email</label>

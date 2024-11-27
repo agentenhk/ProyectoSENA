@@ -12,3 +12,15 @@ export const login = async (URL, parametros) => {
     })
     return respuesta;
 }
+
+export const permisos = async (URL) => {
+    
+    const respuesta =  await fetch(api+URL,{
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json"
+        }
+
+    })
+    return respuesta;
+}

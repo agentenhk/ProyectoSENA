@@ -1,0 +1,91 @@
+/* Layout Principal */
+.layout {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* Contenido */
+.layout-content {
+    display: flex;
+    flex: 1;
+    margin-top: 60px;
+    /* Asegura que el contenido no se superponga con la navbar */
+}
+
+.main-content {
+    flex: 1;
+    margin-left: 250px;
+    /* Espacio para el Sidebar */
+    padding: 20px;
+    background-color: #f4f4f4;
+    overflow-y: auto;
+    min-height: calc(100vh - 120px);
+    /* Evita que el contenido se sobreponga al footer */
+}
+
+/* Sidebar Fijo */
+.sidebar {
+    width: 250px;
+    height: 100%;
+    position: fixed;
+    top: 60px;
+    /* Comienza después de la navbar */
+    left: 0;
+    background-color: #222;
+    color: white;
+    padding: 20px;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Sidebar abierto */
+.sidebar.open {
+    transform: translateX(0);
+}
+
+/* Navbar Fija */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background-color: #333;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 1000;
+}
+
+/* Ajustes del Footer */
+.footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    font-size: 14px;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .navbar {
+        left: 0;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+}
