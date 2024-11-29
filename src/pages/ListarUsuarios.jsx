@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import {
   Box,
   Grid,
@@ -11,26 +11,21 @@ import {
   Paper,
   Typography,
 } from '@mui/material';
+import { obtenerUsuarios} from '../componentes/funciones/Funciones';
 
 export const ListarUsuarios = () => {
-  const [data, setData] = useState([
-    {
-      idusuarios: 1,
-      nombre: "Juan",
-      apellido: "Pérez",
-      correo_electronico: "juan.perez@example.com",
-      estado: "Activo",
-      perfil_idperfil: "Admin",
-    },
-    {
-      idusuarios: 2,
-      nombre: "Ana",
-      apellido: "Gómez",
-      correo_electronico: "ana.gomez@example.com",
-      estado: "Inactivo",
-      perfil_idperfil: "Profesor",
-    },
-  ]); // Datos de ejemplo
+  const [data, setData] = useState([]);
+
+  const optenerUsuarios = async () => {
+    const respuesta = await obtenerUsuarios('/usuario/listar');
+    const dato = await respuesta.json();
+    console.log(dato)
+    if (dato.status === 'succes') setData(dato.usuarios);
+};
+
+useEffect(() => {
+    optenerUsuarios();
+}, []);
 
   return (
     <Box p={2}>
@@ -64,7 +59,7 @@ export const ListarUsuarios = () => {
                     <TableCell>{row.apellido}</TableCell>
                     <TableCell>{row.correo_electronico}</TableCell>
                     <TableCell>{row.estado}</TableCell>
-                    <TableCell>{row.perfil_idperfil}</TableCell>
+                    <TableCell>{row.nombre_rol}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

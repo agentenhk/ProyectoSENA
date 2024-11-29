@@ -37,7 +37,7 @@ export const Privado = () => {
             flex="1"
             sx={{
               padding: 3,
-              mt: 8, // Ajusta el margen superior para evitar que el contenido sea tapado
+              mt: { xs: 10, sm: 12 }, // Ajusta dinámicamente el margen superior según el tamaño de pantalla
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -45,8 +45,8 @@ export const Privado = () => {
           >
             <Outlet />
           </Box>
-            <br />
-            <br />
+          <br />
+          <br />
           {/* Footer */}
           <Box component="footer">
             <Footer />
