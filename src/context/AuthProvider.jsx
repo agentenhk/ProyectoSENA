@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react'
 
+export const api = 'http://localhost:3000/api/'
 
 const AuthContext = createContext();
 
@@ -16,7 +17,7 @@ export const AuthProvider = ({children}) => {
         // sacar datos del usuario identificado del localstorage
 
         const usuario = localStorage.getItem("usuario");
-        
+
         // Comprobar si tengo el user 
         if (!usuario) {
             setCargando(false);
@@ -26,12 +27,12 @@ export const AuthProvider = ({children}) => {
 
         // Transformar los datos a un objeto de javascript
         const userObj = JSON.parse(usuario);
-        const userId = userObj.perfil_idperfil;
+        const userId = userObj.idusuarios;
 
         // Peticion ajax al bakend que compruebe el token y que me devuelva 
         // todos los datos del usuario 
 
-        const request = await fetch("/api/usuario/obtenerPermiso/" + userId, {
+        const request = await fetch(api+"usuario/obtenerPermiso/" + userId, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

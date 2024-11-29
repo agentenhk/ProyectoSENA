@@ -6,28 +6,26 @@ import useAuth from '../hooks/useAuth';
 export const IndexPrivado = () => {
     const { cargando, seccion, auth } = useAuth() || {};
     console.log(cargando, seccion, auth)
+
     const user = {
         name: `Welcome ${auth.nombre}  Perfil ${auth.nombre_rol}`, 
         photo: "https://via.placeholder.com/40",
     };
 
     const sidebarOptionsAdmin = [
-        { label: "Crer usuarios", link: "#", icon: "🏠" },
-        { label: "Listar usuarios", link: "#", icon: "👥" },
-        { label: "Crear curso", link: "#", icon: "⚙️" },
-        { label: "Listar curso", link: "#", icon: "⚙️" },
-        { label: "Salir", link: "/", icon: "⚙️" },
+        { label: "Crer usuarios", link: "/panel/FormCrearUsuario", icon: "🏠" },
+        { label: "Listar usuarios", link: "/panel/ListarUsuarios", icon: "👥" },
+        { label: "Crear curso", link: "/panel/FormCrearCurso", icon: "⚙️" },
+        { label: "Listar curso", link: "/panel/ListarCursos", icon: "⚙️" },
     ];
 
     const sidebarOptionsProfe = [
-        { label: "Calificar estudiantes", link: "#", icon: "🏠" },
-        { label: "Listar Estudiantes", link: "#", icon: "👥" },
-        { label: "Salir", link: "/", icon: "⚙️" },
+        { label: "Calificar estudiantes", link: "/panel/FormCalificarEstudiante", icon: "🏠" },
+        { label: "Listar Estudiantes", link: "/panel/ListarEstudianteCurso", icon: "👥" },
     ];
 
     const sidebarOptionsEstu = [
         { label: "Ver calificaciones", link: "#", icon: "⚙️" },
-        { label: "Salir", link: "/", icon: "⚙️" },
     ];
     const getSidebarOptions = (rol) => {
         if (rol === "admin") {

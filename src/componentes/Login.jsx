@@ -24,18 +24,16 @@ export default function Login() {
         
         if(dato.status == 'succes' && dato.validar == 1){
             // setear datos en el auth
-            const idusuarios = dato.usuario.idusuarios
+            /* const idusuarios = dato.usuario.idusuarios
             const respuestaPermisos = await permisos('/usuario/obtenerPermiso/'+idusuarios)
-            const datoPermiso = await respuestaPermisos.json()
+            const datoPermiso = await respuestaPermisos.json() */
             // Persistir los datos en el navegador 
-            localStorage.setItem("usuario", JSON.stringify(datoPermiso.usuario));
-            setAuth(datoPermiso.usuario)
-            navegar('/panel')
-            
-        }
-        else{
-
-            navegar('/')
+            localStorage.setItem("usuario", JSON.stringify(dato.usuario));
+            setAuth(dato.usuario)
+            // Redireccion 
+            setTimeout(()=>{
+                window.location.reload();
+            },1000);
             
         }
         
