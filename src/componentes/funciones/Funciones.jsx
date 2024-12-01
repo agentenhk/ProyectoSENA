@@ -75,3 +75,43 @@ export const actualizarEstado = async (URL, parametros) => {
     })
     return respuesta;
 }
+
+
+export const obtenerCursos = async (URL) => {
+    
+    const respuesta =  await fetch(api+URL,{
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json"
+        }
+
+    })
+    return respuesta;
+}
+  
+
+export const crearCursos = async (URL, parametros) => {
+    
+    const respuesta =  await fetch(api+URL,{
+        method: 'POST',
+        body: JSON.stringify(parametros),
+        headers: {
+            "Content-Type": "application/json"
+        }
+
+    })
+    return respuesta;
+}
+
+export const actualizarEstadoCursos = async (URL, parametros) => {
+    
+    const respuesta =  await fetch(api+URL,{
+        method: 'PUT',
+        body: JSON.stringify(parametros),
+        headers: {
+            "Content-Type": "application/json"
+        }
+
+    })
+    return respuesta;
+}

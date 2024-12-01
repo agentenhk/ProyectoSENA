@@ -54,6 +54,7 @@ export const FormCrearUsuario = () => {
             confirmar_contrasena: '',
             perfil_idperfil: '',
         });
+        optenerUsuarios();
     };
 
     // Modificar toggleEstado para que haga la petición PUT
