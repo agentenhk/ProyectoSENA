@@ -30,7 +30,19 @@ export const Dashboard = ({rol,name}) => {
              image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnvTxzYxOHEKO0OXyCfF8OLSAZhpMsRroYQA&s',
              description: 'Listar los Cursos del sistema',
              link: 'ListarCursos'
-        }
+        },
+        {
+            title: 'Asignación curso Profesor',
+            image: 'https://st4.depositphotos.com/23336614/30975/v/950/depositphotos_309754244-stock-illustration-presentation-class-teacher-meeting-icon.jpg',
+            description: 'Este modulo nos ayuda a asignar a cada profesor un curso',
+            link: 'FormAsignarCursoProfe'
+       },
+       {
+        title: 'Asignación curso estudiantes',
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSXszfovAk7An4vfrFY8_9Unz_8IN9fdGN4g&s',
+        description: 'Este modulo nos ayuda a asignar a cada profesor un curso',
+        link: 'FormAsignarCursoEstudi'
+       }
     ];
 
     const cardProfe = [

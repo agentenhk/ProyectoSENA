@@ -77,7 +77,7 @@ export const FormCrearCurso = () => {
         const respuesta = await obtenerCursos('/cursos/listar');
         const dato = await respuesta.json();
         console.log(dato)
-        if (dato.status === 'succes') setCursos(dato.usuarios);
+        if (dato.status === 'succes') setCursos(dato.cursos);
     };
 
     useEffect(() => {

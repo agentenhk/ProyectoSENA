@@ -20,7 +20,7 @@ export const ListarCursos = () => {
     const respuesta = await obtenerCursos('/cursos/listar');
     const dato = await respuesta.json();
     console.log(dato)
-    if (dato.status === 'succes') setData(dato.usuarios);
+    if (dato.status === 'succes') setData(dato.cursos);
   };
 
   useEffect(() => {

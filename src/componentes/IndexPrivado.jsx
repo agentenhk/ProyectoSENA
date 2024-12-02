@@ -17,6 +17,8 @@ export const IndexPrivado = () => {
         { label: "Listar usuarios", link: "/panel/ListarUsuarios", icon: "👥" },
         { label: "Crear curso", link: "/panel/FormCrearCurso", icon: "⚙️" },
         { label: "Listar curso", link: "/panel/ListarCursos", icon: "⚙️" },
+        { label: "Asignacion curso profesor", link: "/panel/FormAsignarCursoProfe", icon: "⚙️" },
+        { label: "Asignacion curso estudiante", link: "/panel/FormAsignarCursoEstudi", icon: "⚙️" },
     ];
 
     const sidebarOptionsProfe = [

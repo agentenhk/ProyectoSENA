@@ -12,6 +12,8 @@ import { ListarCursos } from '../../pages/ListarCursos'
 import {FormCalificarEstudiante} from '../../pages/FormCalificarEstudiante'
 import {ListarEstudianteCurso} from '../../pages/ListarEstudianteCurso'
 import {FormVerCalificaciones} from '../../pages/FormVerCalificaciones'
+import {FormAsignarCursoProfe} from '../../pages/FormAsignarCursoProfe'
+import {FormAsignarCursoEstudi} from '../../pages/FormAsignarCursoEstudi'
 
 
 
@@ -37,6 +39,8 @@ export const Rutas = () => {
             <Route path="FormCalificarEstudiante" element={<FormCalificarEstudiante/>} />
             <Route path="ListarEstudianteCurso" element={<ListarEstudianteCurso/>} />
             <Route path="FormVerCalificaciones" element={<FormVerCalificaciones/>} />
+            <Route path="FormAsignarCursoProfe" element={<FormAsignarCursoProfe/>} />
+            <Route path="FormAsignarCursoEstudi" element={<FormAsignarCursoEstudi/>} />
           </Route>
         </Routes>
       </AuthProvider>
