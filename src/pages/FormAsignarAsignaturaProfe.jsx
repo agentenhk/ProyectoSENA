@@ -74,7 +74,7 @@ export const FormAsignarAsignaturaProfe = () => {
     const obtenerAsignaturasLista = async () => {
         const respuesta = await get('/asignaturas/listar');
         const dato = await respuesta.json();
-        if (dato.status === 'succes') setAsignaturas(dato.cursos);
+        if (dato.status === 'succes') setAsignaturas(dato.asignaturas);
     };
 
     const obtenerAsignacionesLista = async () => {

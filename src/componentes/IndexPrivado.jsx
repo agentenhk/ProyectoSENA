@@ -22,15 +22,15 @@ export const IndexPrivado = () => {
         { label: "Crear periodo", link: "/panel/FormCrearPeriodo", icon: "⚙️" },
         { label: "Asignacion curso profesor", link: "/panel/FormAsignarCursoProfe", icon: "⚙️" },
         { label: "Asignacion curso estudiante", link: "/panel/FormAsignarCursoEstudi", icon: "⚙️" },
+        { label: "Asignacion asignatura profesor", link: "/panel/FormAsignarAsignaturaProfe", icon: "⚙️" },
     ];
 
     const sidebarOptionsProfe = [
         { label: "Calificar estudiantes", link: "/panel/FormCalificarEstudiante", icon: "🏠" },
-        { label: "Listar Estudiantes", link: "/panel/ListarEstudianteCurso", icon: "👥" },
     ];
 
     const sidebarOptionsEstu = [
-        { label: "Ver calificaciones", link: "#", icon: "⚙️" },
+        { label: "Ver calificaciones", link: "/panel/FormVerCalificaciones", icon: "⚙️" },
     ];
     const getSidebarOptions = (rol) => {
         if (rol === "admin") {

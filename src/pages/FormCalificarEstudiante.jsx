@@ -17,13 +17,13 @@ import {
   Paper,
 } from '@mui/material';
 import useAuth from '../hooks/useAuth';
-import { get,post,put } from '../componentes/funciones/Funciones'
+import { get, post, put } from '../componentes/funciones/Funciones'
 
 
 export const FormCalificarEstudiante = () => {
 
   const { auth } = useAuth() || {};
-  
+
 
   const [cursos, setCursos] = useState([]);
   const [estudiantes, setEstudiantes] = useState([]);
@@ -43,14 +43,14 @@ export const FormCalificarEstudiante = () => {
     tercer_periodo: '',
     cuarto_periodo: '',
     nota_final: '',
-});
+  });
 
   const optenerPeriodos = async () => {
     const respuesta = await get('/periodos/listar');
     const dato = await respuesta.json();
     console.log(dato)
     if (dato.status === 'succes') setPeriodos(dato.periodos);
-};
+  };
 
   const traer_curso_profe = async () => {
     const id = auth.idusuarios
@@ -64,7 +64,7 @@ export const FormCalificarEstudiante = () => {
     traer_curso_profe()
   }, []);
 
-  
+
 
   const handleCursoChange = async (e) => {
     const id_curso = e.target.value;
@@ -77,16 +77,16 @@ export const FormCalificarEstudiante = () => {
     const respuesta = await get(`/calificar/profesores/${id_usuario}/${id_curso}/estudiantes`);
     const dato = await respuesta.json();
     if (dato.status === 'succes') {
-      
-      
+
+
       // Construye la tabla inicial con datos vacíos para las notas
       const nuevaTabla = dato.estudiantes.map((estudiante) => ({
         id_estudiante: estudiante.estudiante_id,
         estudiante_nombre: estudiante.estudiante_nombre,
         id_curso: id_curso,
-        id_asignatura:estudiante.id_asignatura,
-        id_profesor:auth.idusuarios,
-        id_periodo:periodos[0].id,
+        id_asignatura: estudiante.id_asignatura,
+        id_profesor: auth.idusuarios,
+        id_periodo: periodos[0].id,
         nombre_asignatura: estudiante.nombre_asignatura,
         primer_periodo: estudiante.primer_periodo,
         segundo_periodo: estudiante.segundo_periodo,
@@ -120,8 +120,8 @@ export const FormCalificarEstudiante = () => {
     setTablaDatos(nuevaTabla);
   };
 
-  
-  const handleGuardar = async() => {
+
+  const handleGuardar = async () => {
     for (const tb of tablaDatos) {
       // Convertir las notas a números flotantes
       const datosEnvio = {
@@ -136,13 +136,35 @@ export const FormCalificarEstudiante = () => {
         cuarto_periodo: parseFloat(tb.cuarto_periodo),
         nota_final: parseFloat(tb.nota_final)
       };
-      
-      if(!datosEnvio.primer_periodo || !datosEnvio.segundo_periodo || !datosEnvio.tercer_periodo || !datosEnvio.cuarto_periodo || !datosEnvio.nota_final){
-         // Enviar los datos por POST a tu servidor
+      const respuesta = await put('/calificar/actualizarCalificacion', datosEnvio);
+      const dato = await respuesta.json();
+      console.log(dato)
+    }
+
+
+  };
+
+  const handleActualizar = async () => {
+    for (const tb of tablaDatos) {
+      // Convertir las notas a números flotantes
+      const datosEnvio = {
+        id_estudiante: tb.id_estudiante,
+        id_curso: tb.id_curso,
+        id_asignatura: tb.id_asignatura,
+        id_profesor: tb.id_profesor,
+        id_periodo: tb.id_periodo,
+        primer_periodo: parseFloat(tb.primer_periodo),
+        segundo_periodo: parseFloat(tb.segundo_periodo),
+        tercer_periodo: parseFloat(tb.tercer_periodo),
+        cuarto_periodo: parseFloat(tb.cuarto_periodo),
+        nota_final: parseFloat(tb.nota_final)
+      };
+      if (datosEnvio.primer_periodo == 0 || datosEnvio.segundo_periodo == 0 || datosEnvio.tercer_periodo == 0 || datosEnvio.cuarto_periodo == 0 || datosEnvio.nota_final == 0) {
+        // Enviar los datos por POST a tu servidor
         const respuesta = await post('/calificar/crear', datosEnvio);
         const dato = await respuesta.json();
         console.log(dato)
-      }else{
+      } else {
         const notasActualizar = {
           id_estudiante: tb.id_estudiante,
           id_curso: tb.id_curso,
@@ -159,9 +181,9 @@ export const FormCalificarEstudiante = () => {
         const dato = await respuesta.json();
         console.log(dato)
       }
-     
+
     }
-  
+
   };
 
 
@@ -263,6 +285,14 @@ export const FormCalificarEstudiante = () => {
             disabled={tablaDatos.length === 0}
           >
             Guardar Notas
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleActualizar}
+            disabled={tablaDatos.length === 0}
+          >
+            Actualizar Notas
           </Button>
         </Grid>
       </Grid>
