@@ -19,7 +19,7 @@ import {
 } from '@mui/material';
 import ToggleOffIcon from '@mui/icons-material/ToggleOff';
 import ToggleOnIcon from '@mui/icons-material/ToggleOn';
-import { crearUsuarios, obtenerRoles, obtenerUsuarios, actualizarEstado } from '../componentes/funciones/Funciones';
+import { post, get, put } from '../componentes/funciones/Funciones';
 
 export const FormCrearUsuario = () => {
     const [formData, setFormData] = useState({
@@ -43,7 +43,7 @@ export const FormCrearUsuario = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const respuesta = await crearUsuarios('/usuario/crear', formData);
+        const respuesta = await post('/usuario/crear', formData);
         const dato = await respuesta.json();
         console.log(dato)
         setFormData({
@@ -65,7 +65,7 @@ export const FormCrearUsuario = () => {
         const parametros = { id, estado: nuevoEstado }; // Parámetros para la petición
 
         // Enviar la solicitud PUT para actualizar el estado
-        const respuesta = await actualizarEstado('/usuario/actualizarestado', parametros);
+        const respuesta = await put('/usuario/actualizarestado', parametros);
         const dato = await respuesta.json();
 
         if (dato.status === "succes") {
@@ -84,13 +84,13 @@ export const FormCrearUsuario = () => {
 
 
     const optenerRoles = async () => {
-        const respuesta = await obtenerRoles('/roles/usuario');
+        const respuesta = await get('/roles/usuario');
         const dato = await respuesta.json();
         if (dato.status === 'succes') setRoles(dato.roles);
     };
 
     const optenerUsuarios = async () => {
-        const respuesta = await obtenerUsuarios('/usuario/listar');
+        const respuesta = await get('/usuario/listar');
         const dato = await respuesta.json();
         console.log(dato)
         if (dato.status === 'succes') setUsuarios(dato.usuarios);

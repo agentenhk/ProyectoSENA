@@ -21,12 +21,12 @@ import ToggleOffIcon from '@mui/icons-material/ToggleOff';
 import ToggleOnIcon from '@mui/icons-material/ToggleOn';
 import { post, get, put } from '../componentes/funciones/Funciones';
 
-export const FormCrearCurso = () => {
+export const FormCrearPeriodo = () => {
     const [formData, setFormData] = useState({
-        nombre: '',
+        nombre_periodo: '',
     });
 
-    const [cursos, setCursos] = useState([]);
+    const [periodos, setPeriodos] = useState([]);
 
     const handleChange = (e) => {
         setFormData({
@@ -37,11 +37,11 @@ export const FormCrearCurso = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const respuesta = await post('/cursos/crear', formData);
+        const respuesta = await post('/periodos/crear', formData);
         const dato = await respuesta.json();
         console.log(dato)
         setFormData({
-            nombre: '',
+            nombre_periodo: '',
         });
         optenerCursos();
     };
@@ -54,14 +54,14 @@ export const FormCrearCurso = () => {
         const parametros = { id, estado: nuevoEstado }; // Parámetros para la petición
 
         // Enviar la solicitud PUT para actualizar el estado
-        const respuesta = await put('/cursos/actualizarestadocur', parametros);
+        const respuesta = await put('/periodos/actualizarestadoper', parametros);
         const dato = await respuesta.json();
 
         if (dato.status === "succes") {
             // Actualizar el estado localmente en la tabla
-            setCursos((prev) =>
+            setPeriodos((prev) =>
                 prev.map((item) =>
-                    item.idcursos === id
+                    item.id === id
                         ? { ...item, estado: nuevoEstado === 1 ? 'Activo' : 'Inactivo' } // Actualiza el estado
                         : item
                 )
@@ -73,22 +73,22 @@ export const FormCrearCurso = () => {
 
 
 
-    const optenerCursos = async () => {
-        const respuesta = await get('/cursos/listar');
+    const optenerPeriodos = async () => {
+        const respuesta = await get('/periodos/listar');
         const dato = await respuesta.json();
         console.log(dato)
-        if (dato.status === 'succes') setCursos(dato.cursos);
+        if (dato.status === 'succes') setPeriodos(dato.periodos);
     };
 
     useEffect(() => {
-      optenerCursos();
+        optenerPeriodos();
     }, []);
 
     return (
         <Box p={2}>
             <Grid container spacing={2}>
                 <Grid container justifyContent="center" alignItems="center">
-                    <h1>Crear Cursos</h1>
+                    <h1>Crear Periodos</h1>
                 </Grid>
 
                 {/* Formulario */}
@@ -117,7 +117,7 @@ export const FormCrearCurso = () => {
                             </Grid>
                             <Grid item xs={12}>
                                 <Button type="submit" fullWidth variant="contained" color="primary">
-                                    Crear Cursos
+                                    Crear Periodos
                                 </Button>
                             </Grid>
                         </Grid>
@@ -145,17 +145,17 @@ export const FormCrearCurso = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {cursos.map((row) => (
-                                    <TableRow key={row.idcursos}>
-                                        <TableCell>{row.idcursos}</TableCell>
-                                        <TableCell>{row.nombre}</TableCell>
+                                {periodos.map((row) => (
+                                    <TableRow key={row.id}>
+                                        <TableCell>{row.id}</TableCell>
+                                        <TableCell>{row.nombre_periodo}</TableCell>
                                         <TableCell>{row.estado === 'Activo' ? 'Activo' : 'Inactivo'}</TableCell> {/* Mostrar "Activo" o "Inactivo" */}
                                         <TableCell>
                                             {new Date(row.fecha_registro).toLocaleDateString('es-ES')}
                                         </TableCell>
                                         <TableCell>
                                             <IconButton
-                                                onClick={() => toggleEstado(row.idcursos, row.estado === 'Activo' ? 1 : 2)} // Llama correctamente con 1 o 0
+                                                onClick={() => toggleEstado(row.id, row.estado === 'Activo' ? 1 : 2)} // Llama correctamente con 1 o 0
                                                 color={row.estado === 'Activo' ? 'primary' : 'secondary'}
                                             >
                                                 {row.estado === 'Activo' ? <ToggleOnIcon /> : <ToggleOffIcon />}

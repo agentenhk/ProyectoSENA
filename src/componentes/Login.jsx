@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useForms } from './ayuda/useForms'
-import {login,permisos} from './funciones/Funciones'
+import {post,get} from './funciones/Funciones'
 import { useNavigate } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 import { Box, Grid } from '@mui/material';
@@ -19,13 +19,13 @@ export default function Login() {
     const validarDatos = async (e) => {
         e.preventDefault()
         let parametros = form
-        const respuesta = await login('usuario/login', parametros)
+        const respuesta = await post('usuario/login', parametros)
         const dato = await respuesta.json()
         
         if(dato.status == 'succes' && dato.validar == 1){
             // setear datos en el auth
             /* const idusuarios = dato.usuario.idusuarios
-            const respuestaPermisos = await permisos('/usuario/obtenerPermiso/'+idusuarios)
+            const respuestaPermisos = await get('/usuario/obtenerPermiso/'+idusuarios)
             const datoPermiso = await respuestaPermisos.json() */
             // Persistir los datos en el navegador 
             localStorage.setItem("usuario", JSON.stringify(dato.usuario));

@@ -19,7 +19,7 @@ import {
 } from '@mui/material';
 import ToggleOffIcon from '@mui/icons-material/ToggleOff';
 import ToggleOnIcon from '@mui/icons-material/ToggleOn';
-import { obtenerUsuarios, obtenerCursos, asignarCurso, actualizarEstadoAsignacion, obtenerAsignaciones } from '../componentes/funciones/Funciones';
+import { get, post, put} from '../componentes/funciones/Funciones';
 
 export const FormAsignarCursoEstudi = () => {
     const [formData, setFormData] = useState({
@@ -40,7 +40,7 @@ export const FormAsignarCursoEstudi = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const respuesta = await asignarCurso('/asignaciones/crear/estudiantecurso', formData);
+        const respuesta = await post('/asignaciones/crear/estudiantecurso', formData);
         const dato = await respuesta.json();
         console.log(dato);
         setFormData({ id_usuario: '', id_curso: '' });
@@ -49,7 +49,7 @@ export const FormAsignarCursoEstudi = () => {
 
     const toggleEstadoAsignacion = async (id, estado) => {
         const nuevoEstado = estado === 'Activo' ? 2 : 1;
-        const respuesta = await actualizarEstadoAsignacion('/asignaciones/actualizar', { id, estado: nuevoEstado });
+        const respuesta = await put('/asignaciones/actualizar', { id, estado: nuevoEstado });
         const dato = await respuesta.json();
         if (dato.status === 'succes') {
             setAsignaciones((prev) =>
@@ -64,7 +64,7 @@ export const FormAsignarCursoEstudi = () => {
     };
 
     const obtenerEstudiantesLista = async () => {
-        const respuesta = await obtenerUsuarios('/usuario/listar');
+        const respuesta = await get('/usuario/listar');
         const dato = await respuesta.json();
         // Filtrar los datos con perfil_idperfil igual a 2
         const datosFiltrados = dato.usuarios.filter(item => item.perfil_idperfil === 3);
@@ -72,13 +72,13 @@ export const FormAsignarCursoEstudi = () => {
     };
 
     const obtenerCursosLista = async () => {
-        const respuesta = await obtenerCursos('/cursos/listar');
+        const respuesta = await get('/cursos/listar');
         const dato = await respuesta.json();
         if (dato.status === 'succes') setCursos(dato.cursos);
     };
 
     const obtenerAsignacionesLista = async () => {
-        const respuesta = await obtenerAsignaciones('/asignaciones/listar/estudiante');
+        const respuesta = await get('/asignaciones/listar/estudiante');
         const dato = await respuesta.json();
         if (dato.status === 'succes') setAsignaciones(dato.asignaciones);
     };

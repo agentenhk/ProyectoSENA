@@ -32,6 +32,24 @@ export const Dashboard = ({rol,name}) => {
              link: 'ListarCursos'
         },
         {
+            title: 'Crear asignatura',
+            image: 'https://img.freepik.com/vector-gratis/colorido-ciencia-objetos-iconos-vector-conjunto_1308-132161.jpg',
+            description: 'Crear las asignaturas del sistema',
+            link: 'FormCrearAsignatura'
+        },
+        {
+            title: 'Listar asignaturas',
+            image: 'https://www.shutterstock.com/image-vector/set-school-subjects-cartoon-style-260nw-2009296706.jpg',
+            description: 'Listar las asignaturas del sistema',
+            link: 'ListarAsignaturas'
+        },
+        {
+            title: 'Crear Periodo',
+            image: 'https://static.vecteezy.com/system/resources/previews/014/724/782/non_2x/accounting-period-line-icon-vector.jpg',
+            description: 'Crea y lista periodos',
+            link: 'ListarAsignaturas'
+        },
+        {
             title: 'Asignación curso Profesor',
             image: 'https://st4.depositphotos.com/23336614/30975/v/950/depositphotos_309754244-stock-illustration-presentation-class-teacher-meeting-icon.jpg',
             description: 'Este modulo nos ayuda a asignar a cada profesor un curso',

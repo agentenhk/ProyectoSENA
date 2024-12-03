@@ -11,13 +11,13 @@ import {
   Paper,
   Typography,
 } from '@mui/material';
-import { obtenerUsuarios} from '../componentes/funciones/Funciones';
+import {get} from '../componentes/funciones/Funciones';
 
 export const ListarUsuarios = () => {
   const [data, setData] = useState([]);
 
   const optenerUsuarios = async () => {
-    const respuesta = await obtenerUsuarios('/usuario/listar');
+    const respuesta = await get('/usuario/listar');
     const dato = await respuesta.json();
     console.log(dato)
     if (dato.status === 'succes') setData(dato.usuarios);

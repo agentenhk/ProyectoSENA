@@ -19,16 +19,16 @@ import {
 } from '@mui/material';
 import ToggleOffIcon from '@mui/icons-material/ToggleOff';
 import ToggleOnIcon from '@mui/icons-material/ToggleOn';
-import { get, post, put } from '../componentes/funciones/Funciones';
+import { get, post, put} from '../componentes/funciones/Funciones';
 
-export const FormAsignarCursoProfe = () => {
+export const FormAsignarAsignaturaProfe = () => {
     const [formData, setFormData] = useState({
         id_usuario: '',
-        id_curso: '',
+        id_asignatura: '',
     });
 
     const [profesores, setProfesores] = useState([]);
-    const [cursos, setCursos] = useState([]);
+    const [asignaturas, setAsignaturas] = useState([]);
     const [asignaciones, setAsignaciones] = useState([]);
 
     const handleChange = (e) => {
@@ -40,16 +40,16 @@ export const FormAsignarCursoProfe = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const respuesta = await post('/asignaciones/crear', formData);
+        const respuesta = await post('/asignaciones/crear/profesorasignatura', formData);
         const dato = await respuesta.json();
-        console.log(dato);
-        setFormData({ id_usuario: '', id_curso: '' });
+        
+        setFormData({ id_usuario: '', id_asignatura: '' });
         obtenerAsignacionesLista();
     };
 
     const toggleEstadoAsignacion = async (id, estado) => {
         const nuevoEstado = estado === 'Activo' ? 2 : 1;
-        const respuesta = await put('/asignaciones/actualizar', { id, estado: nuevoEstado });
+        const respuesta = await put('/asignaciones/actualizar/asigpro', { id, estado: nuevoEstado });
         const dato = await respuesta.json();
         if (dato.status === 'succes') {
             setAsignaciones((prev) =>
@@ -71,21 +71,21 @@ export const FormAsignarCursoProfe = () => {
         if (dato.status === 'succes') setProfesores(datosFiltrados);
     };
 
-    const obtenerCursosLista = async () => {
-        const respuesta = await get('/cursos/listar');
+    const obtenerAsignaturasLista = async () => {
+        const respuesta = await get('/asignaturas/listar');
         const dato = await respuesta.json();
-        if (dato.status === 'succes') setCursos(dato.cursos);
+        if (dato.status === 'succes') setAsignaturas(dato.cursos);
     };
 
     const obtenerAsignacionesLista = async () => {
-        const respuesta = await get('/asignaciones/listar');
+        const respuesta = await get('/asignaciones/listar/asignaturasprofe');
         const dato = await respuesta.json();
         if (dato.status === 'succes') setAsignaciones(dato.asignaciones);
     };
 
     useEffect(() => {
         obtenerProfesoresLista();
-        obtenerCursosLista();
+        obtenerAsignaturasLista();
         obtenerAsignacionesLista();
     }, []);
 
@@ -130,17 +130,17 @@ export const FormAsignarCursoProfe = () => {
                             </Grid>
                             <Grid item xs={12}>
                                 <FormControl fullWidth>
-                                    <InputLabel id="curso-label">Curso</InputLabel>
+                                    <InputLabel id="curso-label">Asignaturas</InputLabel>
                                     <Select
                                         labelId="curso-label"
-                                        name="id_curso"
-                                        value={formData.id_curso}
+                                        name="id_asignatura"
+                                        value={formData.id_asignatura}
                                         onChange={handleChange}
                                         required
                                     >
-                                        {cursos.map((curso) => (
-                                            <MenuItem key={curso.idcursos} value={curso.idcursos}>
-                                                {curso.nombre}
+                                        {asignaturas.map((asignatura) => (
+                                            <MenuItem key={asignatura.id} value={asignatura.id}>
+                                                {asignatura.nombre_asignatura}
                                             </MenuItem>
                                         ))}
                                     </Select>
@@ -148,7 +148,7 @@ export const FormAsignarCursoProfe = () => {
                             </Grid>
                             <Grid item xs={12}>
                                 <Button type="submit" fullWidth variant="contained" color="primary">
-                                    Asignar Curso
+                                    Asignar Asignatura
                                 </Button>
                             </Grid>
                         </Grid>
@@ -169,7 +169,7 @@ export const FormAsignarCursoProfe = () => {
                             <TableHead>
                                 <TableRow>
                                     <TableCell>Profesor</TableCell>
-                                    <TableCell>Curso</TableCell>
+                                    <TableCell>Asignatura</TableCell>
                                     <TableCell>Estado</TableCell>
                                     <TableCell>Acciones</TableCell>
                                 </TableRow>
@@ -178,7 +178,7 @@ export const FormAsignarCursoProfe = () => {
                                 {asignaciones.map((row) => (
                                     <TableRow key={row.id}>
                                         <TableCell>{row.profesor_nombre}</TableCell>
-                                        <TableCell>{row.curso_nombre}</TableCell>
+                                        <TableCell>{row.asignatura_nombre}</TableCell>
                                         <TableCell>{row.estado}</TableCell>
                                         <TableCell>
                                             <IconButton

@@ -13,18 +13,18 @@ import {
 } from '@mui/material';
 import { get } from '../componentes/funciones/Funciones';
 
-export const ListarCursos = () => {
+export const ListarAsignaturas = () => {
   const [data, setData] = useState([]);
 
-  const optenerCursos = async () => {
-    const respuesta = await get('/cursos/listar');
+  const optenerAsignaturas = async () => {
+    const respuesta = await get('/asignaturas/listar');
     const dato = await respuesta.json();
     console.log(dato)
-    if (dato.status === 'succes') setData(dato.cursos);
+    if (dato.status === 'succes') setData(dato.asignaturas);
   };
 
   useEffect(() => {
-    optenerCursos();
+    optenerAsignaturas();
   }, []);
 
   return (
@@ -32,7 +32,7 @@ export const ListarCursos = () => {
       {/* Título */}
       <Grid container justifyContent="center" alignItems="center" mb={3}>
         <Typography variant="h4" component="h1">
-          Listar Cursos
+          Listar Asignaturas
         </Typography>
       </Grid>
 
@@ -57,9 +57,9 @@ export const ListarCursos = () => {
             </TableHead>
             <TableBody>
               {data.map((row) => (
-                <TableRow key={row.idcursos}>
-                  <TableCell>{row.idcursos}</TableCell>
-                  <TableCell>{row.nombre}</TableCell>
+                <TableRow key={row.id}>
+                  <TableCell>{row.id}</TableCell>
+                  <TableCell>{row.nombre_asignatura}</TableCell>
                   <TableCell>{row.estado === 'Activo' ? 'Activo' : 'Inactivo'}</TableCell> {/* Mostrar "Activo" o "Inactivo" */}
                   <TableCell>
                     {new Date(row.fecha_registro).toLocaleDateString('es-ES')}
